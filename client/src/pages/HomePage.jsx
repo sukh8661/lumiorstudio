@@ -172,11 +172,11 @@ export default function HomePage() {
             <div className="project-image bloom">
               <img
                 className="project-generated"
-                src="/assets/projects/esfire-screen.webp"
-                alt="Esfire India product website"
+                src="/assets/projects/home-esfire.webp"
+                alt="A wood-burning stove in a bright, window-lined living room"
                 loading="lazy"
-                width="1536"
-                height="1024"
+                width="1254"
+                height="1254"
               />
               <span className="project-image-title">
                 ESFIRE<span>From product to possibility.</span>
@@ -192,11 +192,11 @@ export default function HomePage() {
             <div className="project-image forma">
               <img
                 className="project-generated"
-                src="/assets/projects/rasam-o-riwaz-screen.webp"
-                alt="Rasam-O-Riwaz giftique studio website"
+                src="/assets/projects/home-rasam.webp"
+                alt="A wooden gift hamper with flowers, treats and a bottled drink"
                 loading="lazy"
-                width="1536"
-                height="1024"
+                width="1333"
+                height="2000"
               />
               <span className="project-image-title">
                 RASAM<span>Made for every occasion.</span>
