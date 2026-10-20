@@ -24,8 +24,9 @@ function Metadata() {
     );
     document.title = (page?.title || "Page not found") + " — Esgrow Studio";
     document.querySelector('meta[name="description"]').content =
+      page?.description ||
       (page?.title || "Page not found") +
-      ". Thoughtful design, development and connected digital growth from Esgrow Studio.";
+        ". Thoughtful design, development and connected digital growth from Esgrow Studio.";
   }, [pathname]);
   return null;
 }

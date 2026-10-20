@@ -162,50 +162,50 @@ export default function HomePage() {
             </h2>
           </div>
           <p>
-            A few concept explorations.
+            A few projects, out in the world.
             <br />
             Different worlds. The same attention to detail.
           </p>
         </div>
         <div className="work-grid">
-          <a className="project reveal" href="/work/bloom-botanicals">
+          <a className="project reveal" href="/work/esfire-india">
             <div className="project-image bloom">
               <img
                 className="project-generated"
-                src="/assets/bloom.webp"
-                alt="Botanical skincare bottles styled with olive branches and limestone"
+                src="/assets/projects/esfire-screen.webp"
+                alt="Esfire India product website"
                 loading="lazy"
                 width="1536"
                 height="1024"
               />
               <span className="project-image-title">
-                bloom<span>Rooted in a better everyday.</span>
+                ESFIRE<span>From product to possibility.</span>
               </span>
               <span className="project-arrow">↗</span>
             </div>
             <div className="project-caption">
-              <h3>Bloom Botanicals</h3>
-              <span>Branding · E-commerce concept</span>
+              <h3>Esfire India</h3>
+              <span>Website · Strategy · Meta ads</span>
             </div>
           </a>
-          <a className="project reveal" href="/work/forma-living">
+          <a className="project reveal" href="/work/rasam-o-riwaz">
             <div className="project-image forma">
               <img
                 className="project-generated"
-                src="/assets/forma.webp"
-                alt="A sunlit contemporary interior with sculptural furniture and natural materials"
+                src="/assets/projects/rasam-o-riwaz-screen.webp"
+                alt="Rasam-O-Riwaz giftique studio website"
                 loading="lazy"
                 width="1536"
                 height="1024"
               />
               <span className="project-image-title">
-                FORMA<span>Spaces with soul.</span>
+                RASAM<span>Made for every occasion.</span>
               </span>
               <span className="project-arrow">↗</span>
             </div>
             <div className="project-caption">
-              <h3>Forma Living</h3>
-              <span>Web design · Digital strategy concept</span>
+              <h3>Rasam-O-Riwaz</h3>
+              <span>E-commerce · Seasonal catalogue · SEO</span>
             </div>
           </a>
         </div>

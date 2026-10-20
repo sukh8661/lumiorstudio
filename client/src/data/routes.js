@@ -14,7 +14,11 @@ export const routes = [
   { path: "/sitemap", title: "Explore the site" },
   { path: "/404", title: "Page not found" },
   ...services.map((s) => ({ path: "/services/" + s.slug, title: s.name })),
-  ...projects.map((p) => ({ path: "/work/" + p.slug, title: p.name })),
+  ...projects.map((p) => ({
+    path: "/work/" + p.slug,
+    title: p.name + " case study",
+    description: p.teaser,
+  })),
   ...articles.map((a) => ({ path: "/blog/" + a.slug, title: a.title })),
   ...Object.entries(policies).map(([slug, p]) => ({
     path: "/" + slug,

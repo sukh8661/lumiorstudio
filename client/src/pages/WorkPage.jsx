@@ -1,67 +1,159 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { projects } from "../data/projects.js";
+import { projects, projectFilters, projectImage } from "../data/projects.js";
+import usePortfolioMotion from "../hooks/usePortfolioMotion.js";
 import CallToAction from "../components/CallToAction.jsx";
+import "../styles/portfolio.css";
+
 export default function WorkPage() {
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState("All work");
+  const shown = projects.filter(
+    (p) => filter === "All work" || p.filters.includes(filter),
+  );
+  const ref = usePortfolioMotion(filter);
   return (
     <>
-      <section className="work-page-intro page-wrap">
-        <p className="eyebrow">SELECTED EXPLORATIONS / 02</p>
-        <h1>
-          Ideas you can
-          <br />
-          see and feel.
-        </h1>
-        <div className="work-intro-bottom">
-          <p className="lead">
-            Two self-initiated concepts.
-            <br />
-            Different worlds. The same care in the craft.
-          </p>
-          <div className="filter-pills">
-            {["All", "Brand & commerce", "Web & strategy"].map((item) => (
-              <button
-                key={item}
-                aria-pressed={filter === item}
-                onClick={() => setFilter(item)}
+      <div className="portfolio-page" ref={ref}>
+        <section className="portfolio-intro page-wrap">
+          <div className="portfolio-kicker">
+            <p className="eyebrow">OUR WORK / FROM ROOTS TO RESULTS</p>
+            <span>09 projects. Different possibilities.</span>
+          </div>
+          <div className="portfolio-headline" data-enter>
+            <h1>
+              Good work.
+              <br />
+              <span>Real-world roots.</span>
+            </h1>
+            <span className="portfolio-flower" aria-hidden="true">
+              ✿
+            </span>
+          </div>
+          <div className="portfolio-intro-copy" data-enter>
+            <p>
+              From a neighbourhood café to a manufacturing floor.
+              <br />
+              We build digital experiences around the way a business actually
+              works.
+            </p>
+            <a href="#project-collection" className="portfolio-down">
+              Explore the projects <span>↓</span>
+            </a>
+          </div>
+        </section>
+        <section
+          className="project-collection page-wrap"
+          id="project-collection"
+          aria-label="Project collection"
+        >
+          <div className="portfolio-filterbar">
+            <div
+              className="filter-pills"
+              role="group"
+              aria-label="Filter projects by service"
+            >
+              {projectFilters.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setFilter(item)}
+                  aria-pressed={filter === item}
+                >
+                  {item}
+                  <small>
+                    {item === "All work"
+                      ? projects.length
+                      : projects.filter((p) => p.filters.includes(item)).length}
+                  </small>
+                </button>
+              ))}
+            </div>
+            <span className="portfolio-count" role="status">
+              {String(shown.length).padStart(2, "0")} projects
+            </span>
+          </div>
+          <div className="real-project-grid" key={filter}>
+            {shown.map((project, i) => (
+              <article
+                className={
+                  "real-project-card" +
+                  (i === 0 && filter === "All work" ? " is-featured" : "")
+                }
+                key={project.slug}
+                data-enter
+                style={{
+                  "--project-accent": project.accent,
+                  "--project-ink": project.ink,
+                }}
               >
-                {item}
-              </button>
+                <Link
+                  to={"/work/" + project.slug}
+                  className="project-cover"
+                  aria-label={"Read the " + project.name + " case study"}
+                >
+                  <div className="project-cover-top">
+                    <span>{project.sector}</span>
+                    <span>{project.number} / 09</span>
+                  </div>
+                  <div className="project-browser">
+                    <div className="project-browser-chrome" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                      <span>
+                        {new URL(project.url).hostname.replace("www.", "")}
+                      </span>
+                      <b>↗</b>
+                    </div>
+                    <img
+                      src={projectImage(project.image)}
+                      alt={project.name + " website preview"}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      width="1600"
+                      height="900"
+                    />
+                  </div>
+                  <span className="project-cover-action">
+                    View case study <span>↗</span>
+                  </span>
+                </Link>
+                <div className="real-project-copy">
+                  <div>
+                    <p className="eyebrow">
+                      {project.category}
+                      {project.filters.includes("Growth") ? " + GROWTH" : ""}
+                    </p>
+                    <h2>
+                      <Link to={"/work/" + project.slug}>{project.name}</Link>
+                    </h2>
+                    <p>{project.teaser}</p>
+                  </div>
+                  <Link
+                    className="project-round-link"
+                    to={"/work/" + project.slug}
+                    aria-label={"Explore " + project.name}
+                  >
+                    ↗
+                  </Link>
+                </div>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
-      <section className="portfolio-stories page-wrap">
-        {projects
-          .filter((p) => filter === "All" || p.category === filter)
-          .map((project, i) => (
-            <Link
-              to={"/work/" + project.slug}
-              className={"portfolio-story story-" + i}
-              key={project.slug}
-            >
-              <div className="story-photo">
-                <img
-                  src={"/assets/" + project.image + ".webp"}
-                  alt={project.name + " creative concept"}
-                />
-                <span>View exploration ↗</span>
-              </div>
-              <div className="story-copy">
-                <p className="eyebrow">{project.category} · Concept</p>
-                <h2>{project.name}</h2>
-                <p>{project.line}</p>
-                <span className="text-link">Explore the thinking ↗</span>
-              </div>
+          <div className="portfolio-closing" data-enter>
+            <span className="eyebrow">
+              DIFFERENT BUSINESSES. THE SAME CARE.
+            </span>
+            <p>
+              A good website starts with a better understanding of the business
+              behind it.
+            </p>
+            <Link className="text-link" to="/contact">
+              Let’s talk about yours ↗
             </Link>
-          ))}
-        <p className="small-note">
-          These are illustrative studio explorations, not commissioned client
-          work. No client endorsements or commercial results are claimed.
-        </p>
-      </section>
-      <CallToAction compact />
+          </div>
+        </section>
+      </div>
+      <CallToAction />
     </>
   );
 }

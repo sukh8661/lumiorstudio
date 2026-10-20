@@ -19,7 +19,7 @@ const answers = [
   },
   {
     q: "Are the portfolio projects client work?",
-    a: "The current projects are self-initiated creative concepts. They are labelled as concepts and do not claim commercial results.",
+    a: "Our Work page features projects delivered by Esgrow Studio, with individual case studies covering the business challenge, scope and approach. Qualitative outcomes are based on the studio’s project accounts; website previews show the public experience.",
     group: "Projects",
   },
   {
