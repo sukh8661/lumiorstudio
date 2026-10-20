@@ -1,5 +1,6 @@
 import ServiceList from "../components/ServiceList.jsx";
 import StudioPrinciples from "../components/StudioPrinciples.jsx";
+import CallToAction from "../components/CallToAction.jsx";
 export default function HomePage() {
   return (
     <>
@@ -260,23 +261,7 @@ export default function HomePage() {
         <b>Google</b>
         <b>WordPress</b>
       </div>
-      <section className="contact section-pad" id="contact">
-        <p className="eyebrow">Good things begin with a conversation</p>
-        <h2>
-          Let’s make your
-          <br />
-          next chapter brighter.
-        </h2>
-        <p>Bring your big idea. We’ll bring the right kind of energy.</p>
-        <div className="actions">
-          <a className="button" href="/contact">
-            Tell us your idea <span className="circle">↗</span>
-          </a>
-          <a className="button yellow" href="#services">
-            Find your starting point <span>↗</span>
-          </a>
-        </div>
-      </section>
+      <CallToAction home />
     </>
   );
 }
