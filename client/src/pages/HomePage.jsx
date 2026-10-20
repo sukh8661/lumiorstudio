@@ -1,11 +1,12 @@
 import ServiceList from "../components/ServiceList.jsx";
 import StudioPrinciples from "../components/StudioPrinciples.jsx";
 import CallToAction from "../components/CallToAction.jsx";
+import HeroVideo from "../components/HeroVideo.jsx";
 export default function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-image"></div>
+        <HeroVideo />
         <div className="hero-topline">
           <span>
             <i></i> Independent minds. Shared ambition.
