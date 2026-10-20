@@ -1,0 +1,28 @@
+import 'dotenv/config';
+import express from 'express';
+import mongoose from 'mongoose';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import fs from 'node:fs';
+import Inquiry from './models/Inquiry.js';
+import {validateInquiry} from './validation.js';
+
+const app=express(),dist=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../dist');
+app.disable('x-powered-by');
+if(process.env.TRUST_PROXY)app.set('trust proxy',Number(process.env.TRUST_PROXY));
+app.use(helmet({contentSecurityPolicy:{directives:{'script-src':["'self'"],'style-src':["'self'","'unsafe-inline'",'https://fonts.googleapis.com'],'font-src':["'self'",'https://fonts.gstatic.com'],'img-src':["'self'",'data:','blob:'],'upgrade-insecure-requests':process.env.NODE_ENV==='production'?[]:null}},strictTransportSecurity:process.env.NODE_ENV==='production'?undefined:false}));
+app.use(express.json({limit:'24kb'}));
+app.use((req,res,next)=>{const allowed=process.env.FRONTEND_ORIGIN;if(allowed&&req.headers.origin===allowed){res.setHeader('Access-Control-Allow-Origin',allowed);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Headers','Content-Type');res.setHeader('Access-Control-Allow-Methods','GET,POST,OPTIONS');if(req.method==='OPTIONS')return res.sendStatus(204)}next()});
+app.get('/api/health',(req,res)=>res.json({ok:true,database:mongoose.connection.readyState===1?'connected':'unavailable'}));
+const limit=rateLimit({windowMs:15*60*1000,limit:8,standardHeaders:'draft-7',legacyHeaders:false,message:{message:'Too many inquiries. Please try again later.'}});
+app.post('/api/inquiries',limit,async(req,res)=>{if(req.body?.website)return res.status(400).json({message:'Unable to accept this inquiry.'});const {error,value}=validateInquiry(req.body);if(error)return res.status(400).json({message:error});if(mongoose.connection.readyState!==1)return res.status(503).json({message:'Inquiry delivery is not configured right now. Please download your brief and try again later.'});try{await Inquiry.create(value);res.status(201).json({message:'Inquiry received.'})}catch{res.status(503).json({message:'Your inquiry could not be saved. Please try again or download your brief.'})}});
+app.use('/api',(req,res)=>res.status(404).json({message:'API endpoint not found.'}));
+app.use(express.static(dist,{index:false}));
+app.get('*',(req,res)=>{const filename=path.join(dist,'index.html');if(!fs.existsSync(filename))return res.status(503).send('Run npm run build to prepare the frontend.');const routes=JSON.parse(fs.readFileSync(path.join(dist,'routes.json'),'utf8'));const route=req.path.replace(/\/$/,'')||'/';res.status(routes.includes(route)?200:404).sendFile(filename)});
+app.use((err,req,res,next)=>res.status(err.type==='entity.too.large'?413:400).json({message:'Unable to process this request.'}));
+const server=app.listen(Number(process.env.PORT)||3000,'0.0.0.0',()=>console.log(`Esgrow API: http://localhost:${Number(process.env.PORT)||3000}`));
+mongoose.set('bufferCommands',false);
+if(process.env.MONGODB_URI){mongoose.connect(process.env.MONGODB_URI,{serverSelectionTimeoutMS:5000}).then(()=>console.log('MongoDB connected.')).catch(()=>console.error('MongoDB unavailable. Check your environment configuration. Inquiry delivery remains disabled.'))}else console.log('MONGODB_URI is not set. Inquiry delivery is disabled.');
+async function close(){server.close();await mongoose.disconnect();process.exit(0)}process.on('SIGINT',close);process.on('SIGTERM',close);
