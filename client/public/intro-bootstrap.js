@@ -1,0 +1,8 @@
+// Executed before the app paints, so returning visitors see no green flash.
+try {
+  if (sessionStorage.getItem("esgrow:intro-seen:v1") === "true") {
+    document.documentElement.removeAttribute("data-preloading");
+  }
+} catch {
+  // The intro also works when browser storage is unavailable.
+}

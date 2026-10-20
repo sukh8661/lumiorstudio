@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import usePageMotion from "../hooks/usePageMotion.js";
+import Preloader from "./Preloader.jsx";
 export default function Layout() {
   const { pathname } = useLocation();
   const home = pathname === "/";
@@ -13,6 +14,7 @@ export default function Layout() {
   usePageMotion(pathname);
   return (
     <>
+      <Preloader />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
