@@ -28,8 +28,8 @@ export default function HeroVideo() {
         return;
       }
       const source = mobile.matches
-        ? "/assets/hero-mobile.mp4"
-        : "/assets/hero-desktop.mp4";
+        ? "/assets/hero-pf4.mp4"
+        : "/assets/hero-pf4.mp4";
       if (video.getAttribute("src") !== source) {
         setReady(false);
         video.src = source;
