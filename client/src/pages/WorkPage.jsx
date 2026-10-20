@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import { projects, projectFilters, projectImage } from "../data/projects.js";
 import usePortfolioMotion from "../hooks/usePortfolioMotion.js";
 import CallToAction from "../components/CallToAction.jsx";
 import "../styles/portfolio.css";
+import "../styles/work-stroke.css";
+const WorkScrollStroke = lazy(
+  () => import("../components/WorkScrollStroke.jsx"),
+);
 
 export default function WorkPage() {
   const [filter, setFilter] = useState("All work");
@@ -14,6 +18,9 @@ export default function WorkPage() {
   return (
     <>
       <div className="portfolio-page" ref={ref}>
+        <Suspense fallback={null}>
+          <WorkScrollStroke containerRef={ref} layoutKey={filter} />
+        </Suspense>
         <section className="portfolio-intro page-wrap">
           <div className="portfolio-kicker">
             <p className="eyebrow">OUR WORK / FROM ROOTS TO RESULTS</p>
@@ -25,9 +32,6 @@ export default function WorkPage() {
               <br />
               <span>Real-world roots.</span>
             </h1>
-            <span className="portfolio-flower" aria-hidden="true">
-              ✿
-            </span>
           </div>
           <div className="portfolio-intro-copy" data-enter>
             <p>
@@ -138,6 +142,15 @@ export default function WorkPage() {
             <Link className="text-link" to="/contact">
               Let’s talk about yours ↗
             </Link>
+            <div className="work-stroke-flower-space" aria-hidden="true" />
+            <a
+              className="stroke-attribution"
+              href="https://skiper-ui.com/v1/skiper19"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Scroll animation adapted from Skiper UI ↗
+            </a>
           </div>
         </section>
       </div>
