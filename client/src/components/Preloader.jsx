@@ -1,15 +1,22 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import "../styles/preloader.css";
 
-const SESSION_KEY = "esgrow:intro-seen:v1";
+const SESSION_KEY = "esgrow:home-intro-seen:v1";
 const WORDS = ["From", "Roots", "To", "Results,", "ESGROW®"];
 
-export default function Preloader() {
+export default function Preloader({ enabled = false }) {
   const [phase, setPhase] = useState(() =>
-    document.documentElement.hasAttribute("data-preloading") ? "intro" : "done",
+    enabled && document.documentElement.hasAttribute("data-preloading")
+      ? "intro"
+      : "done",
   );
   const completeRef = useRef(null);
   useLayoutEffect(() => {
+    if (!enabled) {
+      document.documentElement.removeAttribute("data-preloading");
+      setPhase("done");
+      return;
+    }
     if (phase === "done") return;
     const root = document.documentElement,
       shell = document.querySelector(".site-shell"),
@@ -110,8 +117,8 @@ export default function Preloader() {
       completeRef.current = null;
     };
     // One timeline per app entry; internal route changes never restart it.
-  }, []);
-  if (phase === "done") return null;
+  }, [enabled]);
+  if (!enabled || phase === "done") return null;
   return (
     <div className="preloader" data-phase={phase}>
       <div className="preloader-panels" aria-hidden="true">

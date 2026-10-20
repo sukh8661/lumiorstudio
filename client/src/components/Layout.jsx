@@ -14,7 +14,7 @@ export default function Layout() {
   usePageMotion(pathname);
   return (
     <>
-      <Preloader />
+      <Preloader enabled={home} />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
