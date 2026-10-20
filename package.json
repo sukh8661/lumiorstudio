@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n api,web \"node --watch backend/server.js\" \"vite --host 0.0.0.0\"",
-    "dev:api": "node --watch backend/server.js",
+    "dev": "concurrently -k -n api,web \"node --watch server/src/index.js\" \"vite --host 0.0.0.0\"",
+    "dev:api": "node --watch server/src/index.js",
     "dev:web": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/postbuild.js",
-    "start": "node backend/server.js",
-    "check": "node --check backend/server.js && node --check frontend/public/motion.js && node --check frontend/public/pages.js",
-    "test": "node --test backend/inquiries.test.js"
+    "start": "node server/src/index.js",
+    "check": "node --check server/src/index.js && node --check server/src/app.js",
+    "test": "node --test server/tests/*.test.js",
+    "format": "prettier --write client/src server/src server/tests scripts vite.config.js"
   },
   "dependencies": {
     "express": "^4.21.2",
@@ -18,7 +19,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
-    "html-react-parser": "^5.2.3",
     "dotenv": "^16.4.7",
     "helmet": "^8.1.0",
     "express-rate-limit": "^7.5.0"
@@ -26,6 +26,7 @@
   "devDependencies": {
     "vite": "^6.2.2",
     "@vitejs/plugin-react": "^4.3.4",
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3"
   }
 }
