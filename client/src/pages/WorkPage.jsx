@@ -76,7 +76,7 @@ export default function WorkPage() {
               <article
                 className={
                   "real-project-card" +
-                  (i === 0 && filter === "All work" ? " is-featured" : "")
+                  (i === 0 ? " is-featured" : i % 2 === 1 ? " copy-first" : "")
                 }
                 key={project.slug}
                 data-enter
@@ -90,35 +90,23 @@ export default function WorkPage() {
                   className="project-cover"
                   aria-label={"Read the " + project.name + " case study"}
                 >
-                  <div className="project-cover-top">
-                    <span>{project.sector}</span>
-                    <span>{project.number} / 09</span>
-                  </div>
-                  <div className="project-browser">
-                    <div className="project-browser-chrome" aria-hidden="true">
-                      <i />
-                      <i />
-                      <i />
-                      <span>
-                        {new URL(project.url).hostname.replace("www.", "")}
-                      </span>
-                      <b>↗</b>
-                    </div>
-                    <img
-                      src={projectImage(project.image)}
-                      alt={project.name + " website preview"}
-                      loading={i === 0 ? "eager" : "lazy"}
-                      decoding="async"
-                      width="1600"
-                      height="900"
-                    />
-                  </div>
+                  <img
+                    src={projectImage(project.image)}
+                    alt={project.name + " website preview"}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    width="1600"
+                    height="900"
+                  />
                   <span className="project-cover-action">
                     View case study <span>↗</span>
                   </span>
                 </Link>
                 <div className="real-project-copy">
                   <div>
+                    <p className="project-row-number">
+                      {project.number} / 09 · {project.sector}
+                    </p>
                     <p className="eyebrow">
                       {project.category}
                       {project.filters.includes("Growth") ? " + GROWTH" : ""}

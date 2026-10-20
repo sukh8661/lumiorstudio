@@ -118,176 +118,169 @@
   font-size: 11px;
   white-space: nowrap;
 }
-.real-project-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 46px 32px;
+.portfolio-page .real-project-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
-.real-project-card {
+.portfolio-page .real-project-card {
   min-width: 0;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  align-items: center;
+  gap: 9%;
 }
-.real-project-card.is-featured {
-  grid-column: 1/-1;
+.portfolio-page .real-project-card.copy-first {
+  grid-template-columns: 1fr 1.35fr;
 }
-.project-cover {
+.portfolio-page .copy-first .project-cover {
+  grid-column: 2;
+  grid-row: 1;
+}
+.portfolio-page .copy-first .real-project-copy {
+  grid-column: 1;
+  grid-row: 1;
+}
+.portfolio-page .project-cover {
   position: relative;
   display: block;
   overflow: hidden;
-  background: var(--project-accent);
-  border-radius: 22px;
-  padding: 25px 30px 64px;
+  border-radius: 16px;
+  padding: 0;
+  background: none;
 }
-.project-cover-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  font-size: 10px;
-  color: var(--project-ink);
-  margin-bottom: 28px;
-}
-.project-cover-top > span:first-child {
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.project-browser {
-  overflow: hidden;
-  border-radius: 9px;
-  background: white;
-  box-shadow: 0 15px 35px #26322226;
-  transform: translateY(8px) rotate(-2deg);
-  transition:
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.7s;
-}
-.real-project-card:nth-child(3n) .project-browser {
-  transform: translateY(8px) rotate(2deg);
-}
-.project-cover:hover .project-browser {
-  transform: translateY(-3px) rotate(0);
-  box-shadow: 0 22px 45px #26322236;
-}
-.project-browser-chrome {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  height: 24px;
-  padding: 0 9px;
-  background: #f6f5f1;
-  color: #7d8278;
-}
-.project-browser-chrome > i {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #d1d5c6;
-}
-.project-browser-chrome > span {
-  font-size: 7px;
-  flex: 1;
-  text-align: center;
-}
-.project-browser-chrome > b {
-  font-size: 9px;
-  font-weight: 400;
-}
-.project-browser > img {
+.portfolio-page .project-cover > img {
   width: 100%;
-  aspect-ratio: 1.75;
+  height: auto;
+  aspect-ratio: 1.55;
   object-fit: cover;
   object-position: top;
   display: block;
-  height: auto;
+  transform: none;
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.8s ease;
 }
-.is-featured .project-cover {
-  padding: 30px 12% 75px;
+.portfolio-page .project-cover:hover > img,
+.portfolio-page .project-cover:focus-visible > img {
+  transform: scale(1.035);
+  filter: brightness(0.94);
 }
-.is-featured .project-cover-top {
-  margin-left: -10%;
-  margin-right: -10%;
-}
-.is-featured .project-browser > img {
-  aspect-ratio: 2.1;
-}
-.project-cover-action {
+.portfolio-page .project-cover-action {
   position: absolute;
-  bottom: 16px;
-  right: 20px;
+  bottom: 18px;
+  right: 18px;
   display: flex;
   align-items: center;
   gap: 25px;
   font-size: 10px;
-  padding: 10px 14px;
+  padding: 12px 17px;
   background: var(--cream);
   border-radius: 30px;
+  transform: translateY(6px);
+  opacity: 0;
+  transition:
+    opacity 0.3s,
+    transform 0.4s;
 }
-.project-cover-action > span {
-  display: block;
+.portfolio-page .project-cover:hover .project-cover-action,
+.portfolio-page .project-cover:focus-visible .project-cover-action {
+  opacity: 1;
+  transform: none;
+}
+.portfolio-page .project-cover-action > span {
   transition: transform 0.3s;
 }
-.project-cover:hover .project-cover-action > span {
+.portfolio-page .project-cover:hover .project-cover-action > span {
   transform: translate(2px, -2px);
 }
-.real-project-copy {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 24px 2px 0;
+.portfolio-page .real-project-copy {
+  display: block;
+  padding: 0;
 }
-.real-project-copy .eyebrow {
+.portfolio-page .project-row-number {
+  font-size: 10px;
+  color: #7a876c;
+  line-height: 1.6;
+  margin: 0 0 26px;
+}
+.portfolio-page .real-project-copy .eyebrow {
   color: #758166;
-  margin: 0 0 9px;
+  margin: 0 0 13px;
 }
-.real-project-copy h2 {
-  font-size: clamp(25px, 2.5vw, 38px);
-  margin: 0 0 12px;
-  line-height: 1.12;
+.portfolio-page .real-project-copy h2 {
+  font-size: clamp(29px, 3.5vw, 49px);
+  margin: 0 0 20px;
+  line-height: 1.08;
 }
-.real-project-copy p:not(.eyebrow) {
-  font-size: 13px;
-  line-height: 1.7;
+.portfolio-page .real-project-copy p:not(.eyebrow):not(.project-row-number) {
+  font-size: 14px;
+  line-height: 1.8;
   color: #6c7764;
   margin: 0;
-  max-width: 440px;
+  max-width: 410px;
 }
-.project-round-link {
-  flex-shrink: 0;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid #d4dcc5;
+.portfolio-page .project-round-link {
+  width: 46px;
+  height: 46px;
+  margin-top: 25px;
   display: grid;
   place-items: center;
+  border-radius: 50%;
+  border: 1px solid #d4dcc5;
   transition:
     background 0.3s,
     transform 0.3s;
-  margin-top: 17px;
 }
-.project-round-link:hover {
+.portfolio-page .project-round-link:hover {
   background: var(--yellow);
-  transform: rotate(8deg);
+  transform: translate(3px, -3px);
 }
-.is-featured .real-project-copy {
-  padding-top: 30px;
+.portfolio-page .real-project-card.is-featured {
+  display: block;
+  width: 88%;
+  align-self: center;
 }
-.is-featured .real-project-copy > div {
+.portfolio-page .is-featured .project-cover > img {
+  aspect-ratio: 1.85;
+}
+.portfolio-page .is-featured .real-project-copy {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  padding: 28px 0 0;
+}
+.portfolio-page .is-featured .real-project-copy > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 60px;
-  width: 92%;
+  gap: 0 45px;
+  width: 100%;
 }
-.is-featured .real-project-copy .eyebrow {
+.portfolio-page .is-featured .project-row-number {
+  grid-column: 1/-1;
+  margin-bottom: 22px;
+}
+.portfolio-page .is-featured .real-project-copy .eyebrow {
   grid-column: 1;
 }
-.is-featured .real-project-copy h2 {
+.portfolio-page .is-featured .real-project-copy h2 {
   grid-column: 1;
   margin: 0;
 }
-.is-featured .real-project-copy p:not(.eyebrow) {
+.portfolio-page
+  .is-featured
+  .real-project-copy
+  p:not(.eyebrow):not(.project-row-number) {
   grid-column: 2;
-  grid-row: 1/3;
+  grid-row: 2/4;
   align-self: center;
-  max-width: 380px;
 }
+.portfolio-page .is-featured .project-round-link {
+  flex-shrink: 0;
+  align-self: end;
+  margin: 0;
+}
+
 .portfolio-closing {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -306,6 +299,87 @@
   grid-column: 2;
   font-size: 12px;
   margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .portfolio-page .real-project-grid {
+    gap: 70px;
+  }
+  .portfolio-page .real-project-card {
+    gap: 6%;
+  }
+  .portfolio-page .real-project-card.is-featured {
+    width: 100%;
+  }
+  .portfolio-page .real-project-copy h2 {
+    font-size: 32px;
+  }
+}
+@media (max-width: 680px) {
+  .portfolio-page .real-project-grid {
+    gap: 48px;
+  }
+  .portfolio-page .real-project-card,
+  .portfolio-page .real-project-card.copy-first {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+  }
+  .portfolio-page .project-cover {
+    padding: 0;
+    border-radius: 12px;
+  }
+  .portfolio-page .project-cover > img,
+  .portfolio-page .is-featured .project-cover > img {
+    aspect-ratio: 1.55;
+  }
+  .portfolio-page .project-cover-action {
+    opacity: 1;
+    transform: none;
+    font-size: 9px;
+    padding: 9px 12px;
+    bottom: 12px;
+    right: 12px;
+  }
+  .portfolio-page .real-project-copy,
+  .portfolio-page .is-featured .real-project-copy {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0;
+  }
+  .portfolio-page .is-featured .real-project-copy > div {
+    display: block;
+    width: auto;
+  }
+  .portfolio-page .project-row-number,
+  .portfolio-page .is-featured .project-row-number {
+    font-size: 9px;
+    margin-bottom: 16px;
+  }
+  .portfolio-page .real-project-copy h2,
+  .portfolio-page .is-featured .real-project-copy h2 {
+    font-size: 29px;
+    margin-bottom: 15px;
+  }
+  .portfolio-page .real-project-copy p:not(.eyebrow):not(.project-row-number) {
+    font-size: 12px;
+  }
+  .portfolio-page .project-round-link,
+  .portfolio-page .is-featured .project-round-link {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    align-self: center;
+    margin: 0;
+  }
+}
+@media (hover: none) {
+  .portfolio-page .project-cover-action {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Case studies: useful chapters, actual website captures, focused feature stories. */
